@@ -135,5 +135,66 @@
       Next Question
     </button>
   </main>
+  
+<script>
+const questions = [
+  {
+    question: "Why is image resolution important when preparing artwork for a wall print?",
+    answers: [
+      "It determines the printer's movement speed.",
+      "It helps preserve image detail and sharpness at the intended print size.",
+      "It automatically corrects image colors.",
+      "It reduces the amount of ink required."
+    ],
+    correct: 1,
+    explanation: "Image resolution affects how much detail is available when the artwork is printed at its final size."
+  },
+  {
+    question: "What happens when you increase the PPI of a low-resolution image without adding genuine image detail?",
+    answers: [
+      "Photoshop restores the original missing details.",
+      "The image automatically becomes suitable for any print size.",
+      "The image may still appear blurry or pixelated.",
+      "The image is automatically converted to vector artwork."
+    ],
+    correct: 2,
+    explanation: "Increasing PPI alone cannot recover details that were not present in the original image."
+  },
+  {
+    question: "When should you check an image's dimensions and resolution?",
+    answers: [
+      "After completing the wall print.",
+      "Before generating the final printing file.",
+      "Only if the printer displays an error.",
+      "Only after importing the file into TWP Control Center."
+    ],
+    correct: 1,
+    explanation: "Checking dimensions and resolution before generating the printing file helps prevent sizing and quality problems."
+  },
+  {
+    question: "What is the primary advantage of vector artwork?",
+    answers: [
+      "It can be scaled without the same pixelation limitations as raster images.",
+      "It eliminates the need for print preparation.",
+      "It automatically adds a white ink channel.",
+      "It reduces printer maintenance requirements."
+    ],
+    correct: 0,
+    explanation: "Vector artwork uses mathematically defined shapes and can be scaled without the same pixelation issues as raster images."
+  },
+  {
+    question: "What should you do before converting prepared artwork into a PRN file?",
+    answers: [
+      "Increase the image resolution regardless of its original quality.",
+      "Remove all color information.",
+      "Begin printing before checking the dimensions.",
+      "Confirm the artwork's final size, quality, and required edits."
+    ],
+    correct: 3,
+    explanation: "Always verify the artwork's final dimensions, image quality, and required edits before generating the PRN file."
+  }
+];
+</script>
+
 </body>
 </html>
