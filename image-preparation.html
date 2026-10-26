@@ -196,5 +196,136 @@ const questions = [
 ];
 </script>
 
+<script>
+let currentQuestion = 0;
+let answeredCorrectly = false;
+
+const quizContainer = document.getElementById("quiz");
+const feedback = document.getElementById("feedback");
+const nextButton = document.getElementById("next-button");
+
+// Display the current question and its answers.
+function showQuestion() {
+  answeredCorrectly = false;
+  feedback.textContent = "";
+  nextButton.hidden = true;
+
+  const question = questions[currentQuestion];
+
+  quizContainer.innerHTML = "";
+
+  const progress = document.createElement("p");
+  progress.textContent =
+    `Question ${currentQuestion + 1} of ${questions.length}`;
+  quizContainer.appendChild(progress);
+
+  const heading = document.createElement("h3");
+  heading.textContent = question.question;
+  quizContainer.appendChild(heading);
+
+  question.answers.forEach((answer, index) => {
+    const button = document.createElement("button");
+    button.type = "button";
+    button.className = "answer";
+    button.textContent = answer;
+
+    button.addEventListener("click", () => {
+      checkAnswer(index, button);
+    });
+
+    quizContainer.appendChild(button);
+  });
+}
+
+// Check the selected answer.
+function checkAnswer(selectedIndex, selectedButton) {
+  if (answeredCorrectly) return;
+
+  const question = questions[currentQuestion];
+
+  // Clear previous incorrect-answer highlighting.
+  document.querySelectorAll(".answer").forEach(button => {
+    button.classList.remove("incorrect");
+  });
+
+  if (selectedIndex === question.correct) {
+    answeredCorrectly = true;
+    selectedButton.classList.add("correct");
+
+    feedback.textContent =
+      "Correct! " + question.explanation;
+    feedback.style.color = "#238b55";
+
+    // Prevent additional answers after a correct selection.
+    document.querySelectorAll(".answer").forEach(button => {
+      button.disabled = true;
+    });
+
+    nextButton.hidden = false;
+
+    if (currentQuestion === questions.length - 1) {
+      nextButton.textContent = "Complete Quiz";
+    } else {
+      nextButton.textContent = "Next Question";
+    }
+
+  } else {
+    selectedButton.classList.add("incorrect");
+
+    feedback.textContent =
+      "Not quite! Please try another answer.";
+    feedback.style.color = "#d9534f";
+  }
+}
+
+// Advance or display the completion message.
+nextButton.addEventListener("click", () => {
+  if (!answeredCorrectly) return;
+
+  currentQuestion++;
+
+  if (currentQuestion < questions.length) {
+    showQuestion();
+  } else {
+    showCompletion();
+  }
+});
+
+// Display the final completion message.
+function showCompletion() {
+  quizContainer.innerHTML = `
+    <div style="text-align:center; padding:25px 0;">
+      <h2 style="color:#238b55;">
+        Image Preparation Complete!
+      </h2>
+      <p>
+        Great job! You've successfully answered
+        all five questions.
+      </p>
+      <p>
+        You're ready for the next section:
+        <strong>Assembly &amp; Safety</strong>.
+      </p>
+      <button class="answer" id="restart-button"
+              type="button">
+        Restart Quiz
+      </button>
+    </div>
+  `;
+
+  feedback.textContent = "";
+  nextButton.hidden = true;
+
+  document.getElementById("restart-button")
+    .addEventListener("click", () => {
+      currentQuestion = 0;
+      showQuestion();
+    });
+}
+
+// Start the quiz.
+showQuestion();
+</script>
+
 </body>
 </html>
