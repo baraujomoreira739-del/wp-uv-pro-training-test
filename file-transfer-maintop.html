@@ -1,0 +1,338 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+ <title>WP-UV-Pro | File Transfer &amp; MainTop Knowledge Test</title>
+  
+<style>
+  * {
+    box-sizing: border-box;
+  }
+
+  body {
+    margin: 0;
+    padding: 24px;
+    background-color: #f3f5f8;
+    font-family: Arial, Helvetica, sans-serif;
+    color: #243247;
+  }
+
+  main {
+    max-width: 700px;
+    margin: 30px auto;
+    padding: 32px;
+    background-color: #ffffff;
+    border-radius: 16px;
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.08);
+  }
+
+  h1 {
+    color: #194c78;
+    font-size: 18px;
+    margin-bottom: 8px;
+  }
+
+  h2 {
+    font-size: 28px;
+    margin-top: 0;
+    margin-bottom: 16px;
+  }
+
+  p {
+    line-height: 1.6;
+  }
+
+  #quiz {
+    margin-top: 28px;
+  }
+
+  .answer {
+    display: block;
+    width: 100%;
+    padding: 16px;
+    margin: 10px 0;
+    border: 2px solid #dce2e8;
+    border-radius: 10px;
+    background-color: white;
+    text-align: left;
+    font-size: 16px;
+    cursor: pointer;
+  }
+
+  .answer:hover {
+    border-color: #2878b8;
+    background-color: #f0f7ff;
+  }
+
+  .answer.correct {
+    border-color: #238b55;
+    background-color: #e9f7ef;
+  }
+
+  .answer.incorrect {
+    border-color: #d9534f;
+    background-color: #fff0ef;
+  }
+
+  #feedback {
+    margin-top: 18px;
+    font-weight: bold;
+    line-height: 1.5;
+  }
+
+  #next-button {
+    margin-top: 20px;
+    padding: 14px 24px;
+    background-color: #194c78;
+    color: white;
+    border: none;
+    border-radius: 8px;
+    font-size: 16px;
+    cursor: pointer;
+  }
+
+  #next-button:hover {
+    background-color: #103754;
+  }
+
+  @media (max-width: 600px) {
+    body {
+      padding: 10px;
+    }
+
+    main {
+      margin: 10px auto;
+      padding: 20px;
+    }
+
+    h2 {
+      font-size: 23px;
+    }
+  }
+</style>
+
+</head>
+
+<body>
+  <main>
+    <h1>WP-UV-Pro Training</h1>
+   <h2>File Transfer &amp; MainTop Knowlege Test</h2>
+    <p>
+  Test your knowledge of transferring artwork,
+  preparing files in MainTop, creating PRN files,
+  and using white ink channels before moving on
+  to the next training section.
+   </p>
+
+    <div id="quiz">
+      <p>Quiz questions will appear here.</p>
+    </div>
+
+    <div id="feedback" aria-live="polite"></div>
+
+    <button id="next-button" type="button" hidden>
+      Next Question
+    </button>
+  </main>
+  
+<script>
+
+
+
+const questions = [
+  {
+    question: "What should you do before importing an image into MainTop?",
+    answers: [
+      "Start printing before checking the artwork.",
+      "Verify the artwork is prepared, saved, and transferred to the printer computer.",
+      "Change the printer's mechanical settings.",
+      "Turn on the UV lamps before opening the file."
+    ],
+    correct: 1,
+    explanation: "The artwork should be properly prepared, saved, and transferred to the printer computer before importing it into MainTop."
+  },
+  {
+    question: "What is the purpose of generating a PRN file in MainTop?",
+    answers: [
+      "To permanently change the original artwork.",
+      "To automatically perform printer maintenance.",
+      "To generate a print-ready file containing the processed image and selected printing settings.",
+      "To calibrate the printer's mechanical components."
+    ],
+    correct: 2,
+    explanation: "MainTop processes the artwork using the selected printing settings and generates a PRN file for the TWP printing software."
+  },
+  {
+    question: "What should you verify before generating the PRN file?",
+    answers: [
+      "That the image dimensions, resolution, printing mode, and other required settings are correct.",
+      "That the printer has completed its shutdown procedure.",
+      "That the ink reservoirs are completely empty.",
+      "That the printer's tracks have been disconnected."
+    ],
+    correct: 0,
+    explanation: "Confirming the image dimensions, resolution, printing mode, and required settings helps prevent printing errors."
+  },
+  {
+    question: "When should you prepare and use a white ink spot channel?",
+    answers: [
+      "Whenever the image contains black colors.",
+      "Only when the image resolution is below 300 PPI.",
+      "Whenever the printer is operating in KCMY mode without white ink.",
+      "Whenever the intended print requires the use of white ink."
+    ],
+    correct: 3,
+    explanation: "A white ink spot channel identifies the areas that require white ink when preparing artwork for a print that uses white ink."
+  },
+  {
+    question: "What image file formats are compatible with MainTop?",
+    answers: [
+      "PNG, GIF, BMP, SVG, and HEIC only.",
+      "TIFF (.tif/.tiff), PSD (.psd), JPG (.jpg/.jpeg), EPS (.eps), and PDF (.pdf).",
+      "MP4, MOV, AVI, WAV, and MP3.",
+      "DOCX, XLSX, PPTX, TXT, and CSV."
+    ],
+    correct: 1,
+    explanation: "MainTop supports common raster and design file formats such as TIFF, PSD, JPG, EPS, and PDF. For artwork requiring a white spot channel, use a format that preserves the necessary channel information; JPEG does not preserve spot channels."
+  }
+];
+
+
+
+</script>
+
+<script>
+let currentQuestion = 0;
+let answeredCorrectly = false;
+
+const quizContainer = document.getElementById("quiz");
+const feedback = document.getElementById("feedback");
+const nextButton = document.getElementById("next-button");
+
+// Display the current question and its answers.
+function showQuestion() {
+  answeredCorrectly = false;
+  feedback.textContent = "";
+  nextButton.hidden = true;
+
+  const question = questions[currentQuestion];
+
+  quizContainer.innerHTML = "";
+
+  const progress = document.createElement("p");
+  progress.textContent =
+    `Question ${currentQuestion + 1} of ${questions.length}`;
+  quizContainer.appendChild(progress);
+
+  const heading = document.createElement("h3");
+  heading.textContent = question.question;
+  quizContainer.appendChild(heading);
+
+  question.answers.forEach((answer, index) => {
+    const button = document.createElement("button");
+    button.type = "button";
+    button.className = "answer";
+    button.textContent = answer;
+
+    button.addEventListener("click", () => {
+      checkAnswer(index, button);
+    });
+
+    quizContainer.appendChild(button);
+  });
+}
+
+// Check the selected answer.
+function checkAnswer(selectedIndex, selectedButton) {
+  if (answeredCorrectly) return;
+
+  const question = questions[currentQuestion];
+
+  // Clear previous incorrect-answer highlighting.
+  document.querySelectorAll(".answer").forEach(button => {
+    button.classList.remove("incorrect");
+  });
+
+  if (selectedIndex === question.correct) {
+    answeredCorrectly = true;
+    selectedButton.classList.add("correct");
+
+    feedback.textContent =
+      "Correct! " + question.explanation;
+    feedback.style.color = "#238b55";
+
+    // Prevent additional answers after a correct selection.
+    document.querySelectorAll(".answer").forEach(button => {
+      button.disabled = true;
+    });
+
+    nextButton.hidden = false;
+
+    if (currentQuestion === questions.length - 1) {
+      nextButton.textContent = "Complete Quiz";
+    } else {
+      nextButton.textContent = "Next Question";
+    }
+
+  } else {
+    selectedButton.classList.add("incorrect");
+
+    feedback.textContent =
+      "Not quite! Please try another answer.";
+    feedback.style.color = "#d9534f";
+  }
+}
+
+// Advance or display the completion message.
+nextButton.addEventListener("click", () => {
+  if (!answeredCorrectly) return;
+
+  currentQuestion++;
+
+  if (currentQuestion < questions.length) {
+    showQuestion();
+  } else {
+    showCompletion();
+  }
+});
+
+// Display the final completion message.
+function showCompletion() {
+  quizContainer.innerHTML = `
+    <div style="text-align:center; padding:25px 0;">
+      <h2 style="color:#238b55;">
+        File Transfer &amp; MainTop Complete!
+      </h2>
+      <p>
+        Great job! You've successfully answered
+all five File Transfer &amp; MainTop questions.
+      </p>
+      <p>
+        You're ready for the next section:
+        <strong>Printing Operations</strong>
+      </p>
+      <button class="answer" id="restart-button"
+              type="button">
+        Restart Quiz
+      </button>
+    </div>
+  `;
+
+  feedback.textContent = "";
+  nextButton.hidden = true;
+
+  document.getElementById("restart-button")
+    .addEventListener("click", () => {
+      currentQuestion = 0;
+      showQuestion();
+    });
+}
+
+// Start the quiz.
+showQuestion();
+</script>
+
+</body>
+</html>
