@@ -1,0 +1,341 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>WP-UV-Pro | Maintenance &amp; Shutdown Knowledge Check</title>
+  
+<style>
+  * {
+    box-sizing: border-box;
+  }
+
+  body {
+    margin: 0;
+    padding: 24px;
+    background-color: #f3f5f8;
+    font-family: Arial, Helvetica, sans-serif;
+    color: #243247;
+  }
+
+  main {
+    max-width: 700px;
+    margin: 30px auto;
+    padding: 32px;
+    background-color: #ffffff;
+    border-radius: 16px;
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.08);
+  }
+
+  h1 {
+    color: #194c78;
+    font-size: 18px;
+    margin-bottom: 8px;
+  }
+
+  h2 {
+    font-size: 28px;
+    margin-top: 0;
+    margin-bottom: 16px;
+  }
+
+  p {
+    line-height: 1.6;
+  }
+
+  #quiz {
+    margin-top: 28px;
+  }
+
+  .answer {
+    display: block;
+    width: 100%;
+    padding: 16px;
+    margin: 10px 0;
+    border: 2px solid #dce2e8;
+    border-radius: 10px;
+    background-color: white;
+    text-align: left;
+    font-size: 16px;
+    cursor: pointer;
+  }
+
+  .answer:hover {
+    border-color: #2878b8;
+    background-color: #f0f7ff;
+  }
+
+  .answer.correct {
+    border-color: #238b55;
+    background-color: #e9f7ef;
+  }
+
+  .answer.incorrect {
+    border-color: #d9534f;
+    background-color: #fff0ef;
+  }
+
+  #feedback {
+    margin-top: 18px;
+    font-weight: bold;
+    line-height: 1.5;
+  }
+
+  #next-button {
+    margin-top: 20px;
+    padding: 14px 24px;
+    background-color: #194c78;
+    color: white;
+    border: none;
+    border-radius: 8px;
+    font-size: 16px;
+    cursor: pointer;
+  }
+
+  #next-button:hover {
+    background-color: #103754;
+  }
+
+  @media (max-width: 600px) {
+    body {
+      padding: 10px;
+    }
+
+    main {
+      margin: 10px auto;
+      padding: 20px;
+    }
+
+    h2 {
+      font-size: 23px;
+    }
+  }
+</style>
+
+</head>
+
+<body>
+  <main>
+    <h1>WP-UV-Pro Training</h1>
+ 
+<h2>Maintenance &amp; Shutdown Knowledge Check</h2>
+
+    <p>
+  Test your knowledge of WP-UV-Pro daily maintenance,
+  printhead care, ink system cleaning, and proper
+  shutdown procedures to complete your training.
+   </p>
+
+    <div id="quiz">
+      <p>Quiz questions will appear here.</p>
+    </div>
+
+    <div id="feedback" aria-live="polite"></div>
+
+    <button id="next-button" type="button" hidden>
+      Next Question
+    </button>
+  </main>
+  
+<script>
+
+
+const questions = [
+  {
+    question: "Why is daily maintenance important for the WP-UV-Pro?",
+    answers: [
+      "It increases the maximum printing speed.",
+      "It helps maintain print quality, prevent ink-related problems, and keep the printer operating reliably.",
+      "It eliminates the need for future maintenance.",
+      "It automatically corrects artwork resolution."
+    ],
+    correct: 1,
+    explanation: "Daily maintenance helps maintain consistent ink delivery, reduce nozzle problems, and keep the printer operating reliably."
+  },
+  {
+    question: "What should you do if an ink test shows missing or inconsistent nozzle patterns?",
+    answers: [
+      "Continue printing without checking the printhead.",
+      "Increase the UV lamp intensity.",
+      "Perform the appropriate cleaning and testing procedures, then contact support if the problem persists.",
+      "Change the image dimensions in MainTop."
+    ],
+    correct: 2,
+    explanation: "Cleaning and testing can help identify and resolve nozzle issues. If the problem continues, contact The Wall Printer Customer Support."
+  },
+  {
+    question: "Why should you clean the printer components regularly?",
+    answers: [
+      "To remove ink residue, dust, and debris that could affect printer performance.",
+      "To increase the maximum printing dimensions.",
+      "To eliminate the need for ink testing.",
+      "To automatically calibrate the printer's movement."
+    ],
+    correct: 0,
+    explanation: "Regular cleaning helps prevent buildup of ink residue, dust, and debris that can affect printer performance and print quality."
+  },
+  {
+    question: "What should you verify when maintaining the ink delivery system?",
+    answers: [
+      "That all ink reservoirs are completely empty.",
+      "That the UV lamps are operating at maximum intensity.",
+      "That the printer's tracks have been disconnected.",
+      "That the ink levels are sufficient, connections are secure, and there are no visible leaks or abnormalities."
+    ],
+    correct: 3,
+    explanation: "Checking ink levels, connections, and potential leaks helps maintain consistent ink delivery and prevent printing problems."
+  },
+  {
+    question: "What should you do before shutting down the WP-UV-Pro?",
+    answers: [
+      "Disconnect the printer's power while it is actively printing.",
+      "Complete the required cleaning and maintenance procedures, then follow the recommended shutdown sequence.",
+      "Leave the printhead exposed without completing maintenance.",
+      "Remove the ink reservoirs after every print."
+    ],
+    correct: 1,
+    explanation: "Completing the required maintenance and following the correct shutdown procedure helps protect the printhead and ink delivery system."
+  }
+];
+
+
+</script>
+
+<script>
+let currentQuestion = 0;
+let answeredCorrectly = false;
+
+const quizContainer = document.getElementById("quiz");
+const feedback = document.getElementById("feedback");
+const nextButton = document.getElementById("next-button");
+
+// Display the current question and its answers.
+function showQuestion() {
+  answeredCorrectly = false;
+  feedback.textContent = "";
+  nextButton.hidden = true;
+
+  const question = questions[currentQuestion];
+
+  quizContainer.innerHTML = "";
+
+  const progress = document.createElement("p");
+  progress.textContent =
+    `Question ${currentQuestion + 1} of ${questions.length}`;
+  quizContainer.appendChild(progress);
+
+  const heading = document.createElement("h3");
+  heading.textContent = question.question;
+  quizContainer.appendChild(heading);
+
+  question.answers.forEach((answer, index) => {
+    const button = document.createElement("button");
+    button.type = "button";
+    button.className = "answer";
+    button.textContent = answer;
+
+    button.addEventListener("click", () => {
+      checkAnswer(index, button);
+    });
+
+    quizContainer.appendChild(button);
+  });
+}
+
+// Check the selected answer.
+function checkAnswer(selectedIndex, selectedButton) {
+  if (answeredCorrectly) return;
+
+  const question = questions[currentQuestion];
+
+  // Clear previous incorrect-answer highlighting.
+  document.querySelectorAll(".answer").forEach(button => {
+    button.classList.remove("incorrect");
+  });
+
+  if (selectedIndex === question.correct) {
+    answeredCorrectly = true;
+    selectedButton.classList.add("correct");
+
+    feedback.textContent =
+      "Correct! " + question.explanation;
+    feedback.style.color = "#238b55";
+
+    // Prevent additional answers after a correct selection.
+    document.querySelectorAll(".answer").forEach(button => {
+      button.disabled = true;
+    });
+
+    nextButton.hidden = false;
+
+    if (currentQuestion === questions.length - 1) {
+      nextButton.textContent = "Complete Quiz";
+    } else {
+      nextButton.textContent = "Next Question";
+    }
+
+  } else {
+    selectedButton.classList.add("incorrect");
+
+    feedback.textContent =
+      "Not quite! Please try another answer.";
+    feedback.style.color = "#d9534f";
+  }
+}
+
+// Advance or display the completion message.
+nextButton.addEventListener("click", () => {
+  if (!answeredCorrectly) return;
+
+  currentQuestion++;
+
+  if (currentQuestion < questions.length) {
+    showQuestion();
+  } else {
+    showCompletion();
+  }
+});
+
+// Display the final completion message.
+function showCompletion() {
+  quizContainer.innerHTML = `
+    <div style="text-align:center; padding:25px 0;">
+      <h2 style="color:#238b55;">
+        WP-UV-Pro Training Complete!
+      </h2>
+      <p>
+        Congratulations! You've successfully completed
+the Maintenance &amp; Shutdown Knowledge Check.
+      </p>
+      <p>
+        <p>
+  You've completed all six sections of the WP-UV-Pro
+  training program. Remember to review the training
+  videos and maintenance instructions whenever needed.
+</p>
+        <strong>Maintenance &amp; Shutdown</strong>
+      </p>
+      <button class="answer" id="restart-button"
+              type="button">
+        Restart Quiz
+      </button>
+    </div>
+  `;
+
+  feedback.textContent = "";
+  nextButton.hidden = true;
+
+  document.getElementById("restart-button")
+    .addEventListener("click", () => {
+      currentQuestion = 0;
+      showQuestion();
+    });
+}
+
+// Start the quiz.
+showQuestion();
+</script>
+
+</body>
+</html>
